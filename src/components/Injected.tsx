@@ -1,7 +1,7 @@
 import React, { FC, ComponentType } from 'react';
 import useInjects from './useInjects';
 
-const Injected: FC<{ child: ComponentType<any>, childProps: any, types: string[], whileLoading: React.ReactElement }>
+const Injected: FC<{ child: ComponentType<any>, childProps: any, types: string[], whileLoading: React.ReactElement | null }>
     = ({ child, childProps, types, whileLoading }) => {
         const injects = useInjects(types);
         if (injects) {

@@ -2,7 +2,7 @@
 
 > React bindings for Saft DI
 
-[![NPM](https://img.shields.io/npm/v/saft-react.svg)](https://www.npmjs.com/package/saft-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/saft-react.svg)](https://www.npmjs.com/package/saft-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-airbnb-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
@@ -15,12 +15,31 @@ npm install --save saft-react
 ```tsx
 import * as React from 'react'
 
-import MyComponent from 'saft-react'
+import {Saft, Injected} from 'saft-react'
+
+@inject('mySaftKey')
+class MyComponent extends React.Component {
+  render() {
+    const mySaftKey = this.props.mySaftKey;
+    //...
+    }
+  }
+
 
 class Example extends React.Component {
   render () {
     return (
-      <MyComponent />
+      <Saft injector={saftInjector}>
+        <Multiple>
+          <Levels>
+            <Of>
+            <Components>
+              <MyComponent />
+            </Components>
+           </Of>
+          </Levels>
+        </Multiple>
+      </Saft>
     )
   }
 }
