@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import SaftContext from './SaftContext';
 import camelCase from 'lodash/camelCase';
 
-const _fixPropName = (propName: string) => {
+const _fixPropName = (propName: any) => {
   let newPropName = propName;
   if (propName !== null && propName.includes('.')) {
     newPropName = camelCase(propName);
@@ -21,13 +21,19 @@ const PromiseProps = (props: Object): Promise<Object> => {
     });
 }
 
-const useInjects = <T>(types: keyof T[] | { [P in keyof T]?: any }) => {
-  const [injectedProps, setInjectedProps] = useState({});
+const arrayToObject = (array: (string | number | symbol)[]) =>
+  array.reduce((obj, item) => { return { ...obj, [item]: item } }, {});
+
+
+const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol }) => {
+  const [injectedProps, setInjectedProps] = useState();
   useEffect(() => {
-    let typeNames: string[] = types instanceof Array ? types : Object.keys(types);
+    let typesSpec: { [key: string]: string | number | symbol } =
+      types instanceof Array ? arrayToObject(types)
+        : Object.keys(types).reduce((obj, item) => { return { ...obj, item: types[item] } }, {});
     const saftContext = useContext(SaftContext);
     const propsResolution = {};
-    typeNames.forEach(type => propsResolution[_fixPropName(type)] = saftContext.injector?.get(type));
+    Object.keys(typesSpec).forEach(typeKey => propsResolution[_fixPropName(typeKey)] = saftContext.injector?.get(typesSpec[typeKey]));
     PromiseProps(propsResolution).then(propsResult => {
       setInjectedProps(propsResult);
     })
