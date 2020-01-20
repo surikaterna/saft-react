@@ -21,17 +21,17 @@ const PromiseProps = (props: Object): Promise<Object> => {
     });
 }
 
-const useInjects = (types: string[]) => {
+const useInjects = <T>(types: [keyof T] ) => {
   const [injectedProps, setInjectedProps] = useState({});
   useEffect(() => {
     const saftContext = useContext(SaftContext);
     const propsResolution = {};
-    types.forEach(type => propsResolution[_fixPropName(type)] = saftContext.injector?.get(type));
+    types.forEach(type => propsResolution[_fixPropName(type.toString())] = saftContext.injector?.get(type));
     PromiseProps(propsResolution).then(propsResult => {
       setInjectedProps(propsResult);
     })
   });
-  return injectedProps;
+  return <T>injectedProps;
 }
 
 export default useInjects;

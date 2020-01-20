@@ -1,7 +1,8 @@
-import { Injected } from './'
+import { inject } from './'
 
-describe('Injected', () => {
+describe('inject', () => {
   it('is truthy', () => {
-    expect(Injected).toBeTruthy()
+    expect(inject).toBeTruthy()
   })
 })
+ 

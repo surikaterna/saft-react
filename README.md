@@ -15,7 +15,7 @@ npm install --save saft-react
 ```tsx
 import * as React from 'react'
 
-import {Saft, Injected} from 'saft-react'
+import {Saft, inject} from 'saft-react'
 
 @inject('mySaftKey')
 class MyComponent extends React.Component {
