@@ -25,15 +25,22 @@ const arrayToObject = (array: (string | number | symbol)[]) =>
   array.reduce((obj, item) => { return { ...obj, [item]: item } }, {});
 
 
-const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol }) => {
+const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol } | string[]) => {
   const [injectedProps, setInjectedProps] = useState();
+  const saftContext = useContext(SaftContext);
+
   useEffect(() => {
+    //object looking like: {propName: 'keyToLookupFromSaft' | null to use propName as key}
     let typesSpec: { [key: string]: string | number | symbol } =
       types instanceof Array ? arrayToObject(types)
         : Object.keys(types).reduce((obj, item) => { return { ...obj, item: types[item] } }, {});
-    const saftContext = useContext(SaftContext);
+
     const propsResolution = {};
-    Object.keys(typesSpec).forEach(typeKey => propsResolution[_fixPropName(typeKey)] = saftContext.injector?.get(typesSpec[typeKey]));
+
+    Object.keys(typesSpec).forEach(typeKey =>
+      propsResolution[_fixPropName(typeKey)] = saftContext.injector?.get(typesSpec[typeKey])
+    );
+
     PromiseProps(propsResolution).then(propsResult => {
       setInjectedProps(propsResult);
     })

@@ -3,8 +3,8 @@ import SaftContext from './SaftContext';
 
 const useInject = <T>(type: T | number | string | symbol) => {
     const [injectedProp, setInjectedProp] = useState();
+    const saftContext = useContext(SaftContext);
     useEffect(() => {
-        const saftContext = useContext(SaftContext);
         Promise.resolve(saftContext.injector?.get(type)).then(resolvedType => setInjectedProp(resolvedType));
     });
     return <T>injectedProp;

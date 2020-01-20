@@ -7,7 +7,7 @@ interface SaftProps {
 
 export default class Saft extends Component<SaftProps> {
     render() {
-        return <SaftContext.Provider value={this.props.injector}>
+        return <SaftContext.Provider value={this.props}>
             {this.props.children}
         </SaftContext.Provider>
     }
