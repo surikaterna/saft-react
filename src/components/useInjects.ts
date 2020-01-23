@@ -33,7 +33,7 @@ const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol }
     //object looking like: {propName: 'keyToLookupFromSaft' | null to use propName as key}
     let typesSpec: { [key: string]: string | number | symbol } =
       types instanceof Array ? arrayToObject(types)
-        : Object.keys(types).reduce((obj, item) => { return { ...obj, item: types[item] } }, {});
+        : Object.keys(types).reduce((obj, item) => { return { ...obj, [item]: types[item] || item } }, {});
 
     const propsResolution = {};
 
