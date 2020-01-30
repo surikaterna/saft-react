@@ -44,7 +44,7 @@ const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol }
     PromiseProps(propsResolution).then(propsResult => {
       setInjectedProps(propsResult);
     })
-  }, [types]);
+  }, []);
   return <T>injectedProps;
 }
 

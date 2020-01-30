@@ -6,7 +6,7 @@ const useInject = <T>(type: T | number | string | symbol) => {
     const saftContext = useContext(SaftContext);
     useEffect(() => {
         Promise.resolve(saftContext.injector?.get(type)).then(resolvedType => setInjectedProp(resolvedType));
-    }, [type]);
+    }, []);
     return <T>injectedProp;
 }
 
