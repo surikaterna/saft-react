@@ -25,7 +25,7 @@ const arrayToObject = (array: (string | number | symbol)[]) =>
   array.reduce((obj, item) => { return { ...obj, [item]: item } }, {});
 
 
-const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol } | string[]) => {
+const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol } | string[], callback?: (injects: T) => void) => {
   const [injectedProps, setInjectedProps] = useState();
   const saftContext = useContext(SaftContext);
 
@@ -43,6 +43,9 @@ const useInjects = <T>(types: (keyof T)[] | { [P in keyof T]?: string | symbol }
 
     PromiseProps(propsResolution).then(propsResult => {
       setInjectedProps(propsResult);
+      if (callback) {
+        callback(<T>propsResult);
+      }
     })
   }, []);
   return <T>injectedProps;
