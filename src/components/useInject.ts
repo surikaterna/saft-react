@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import SaftContext from './SaftContext';
 
-const useInject = <T>(type: T | number | string | symbol, callback: (result: T) => void) => {
+const useInject = <T>(type: T | number | string | symbol, callback?: (result: T) => void) => {
   const [injectedProp, setInjectedProp] = useState();
   const saftContext = useContext(SaftContext);
   useEffect(() => {
