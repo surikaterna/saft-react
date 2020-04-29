@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
-import SaftContext from './SaftContext';
+import SaftContext, { SaftContextType } from './SaftContext';
 
-interface SaftProps {
-    injector: unknown;
-}
-
-const Saft: FC<SaftProps> = props => (
+const Saft: FC<SaftContextType> = props => (
   <SaftContext.Provider value={props}>
     {props.children}
   </SaftContext.Provider>

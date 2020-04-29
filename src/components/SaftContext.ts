@@ -1,8 +1,9 @@
-import React from 'react';
-interface SaftContextType {
-    injector: any
+import { createContext } from 'react';
+
+export interface SaftContextType {
+  injector: unknown;
 }
 
-const SaftContext = React.createContext<Partial<SaftContextType>>({});
+const SaftContext = createContext<Partial<SaftContextType>>({});
 
 export default SaftContext;
