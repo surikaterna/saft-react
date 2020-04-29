@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import SaftContext from './SaftContext';
 
 interface SaftProps {
-    injector: any
+    injector: unknown;
 }
 
-export default class Saft extends Component<SaftProps> {
-    render() {
-        return <SaftContext.Provider value={this.props}>
-            {this.props.children}
-        </SaftContext.Provider>
-    }
-}
+const Saft: FC<SaftProps> = props => (
+  <SaftContext.Provider value={props}>
+    {props.children}
+  </SaftContext.Provider>
+);
+
+export default Saft;
